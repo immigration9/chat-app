@@ -1,0 +1,11 @@
+{
+  "database": {
+    "host": "dbHost",
+    "port": "dbPort",
+    "user": "dbUser",
+    "password": "dbPassword"
+  },
+  "jwt": {
+    "key": "jwtCustomKey"
+  }
+}

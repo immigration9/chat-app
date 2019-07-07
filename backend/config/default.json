@@ -1,0 +1,17 @@
+{
+  "server": {
+    "port": 8080
+  },
+  "database": {
+    "host": "localhost",
+    "port": 27017,
+    "authRequired": false,
+    "database": "chatapp"    
+  },
+  "jwt": {
+    "key": "default-jwt-key"
+  },
+  "config": {
+    "directory": "./private/config.json"
+  }
+}

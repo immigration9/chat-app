@@ -10,5 +10,14 @@
     "chat"
   ],
   "author": "immigration9",
-  "license": "ISC"
+  "license": "MIT",
+  "dependencies": {
+    "@hapi/joi": "^15.1.0",
+    "config": "^3.1.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "joi": "^14.3.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.3"
+  }
 }
