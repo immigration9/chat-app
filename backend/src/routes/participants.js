@@ -1,7 +1,7 @@
 const router = express.Router();
 
 /** Get user list from a Chatroom */
-router.get('/:id', async (req, res) => {
+router.get('/', async (req, res) => {
 
 });
 
