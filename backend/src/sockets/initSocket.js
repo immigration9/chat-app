@@ -81,13 +81,13 @@ module.exports = function (socket) {
     const chatrooms = ChatroomHandler.getChatroomList();
     const user = UserHandler.findUserByName(username);
 
-    // if (chatrooms) {
-    //   chatrooms.map((chatroom) => {
-    //     chatroom.removeUser(user.id);
-    //   })
-    // }
-    // if (user) {
-    //   UserHandler.removeUser(user.id);
-    // }
+    if (chatrooms) {
+      chatrooms.map((chatroom) => {
+        chatroom.removeUser(username);
+      })
+    }
+    if (user) {
+      UserHandler.removeUser(username);
+    }
   })
 }

@@ -36,6 +36,7 @@ cd ./frontend && npm run test
 ## Issues
 * [ ] Socket 관련 통합 테스팅 코드 추가 필요
 * [ ] ID 등 저장하여, 향후에도 지속 가능하도록 개발 필요 (MongoDB 추가 도입 예정)
+* [ ] 이미지 전송 기능 추가
 
 
 License
