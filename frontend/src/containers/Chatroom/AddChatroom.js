@@ -3,8 +3,26 @@ import { ChatroomListWrapper } from './ChatroomStyles';
 import { Form, Button, Input, Icon } from 'antd'
 import SubmitButton from 'components/Buttons/SubmitButton';
 import SideButton from 'components/Buttons/SideButton';
+import SocketHandler from 'utils/socket';
 
 class AddChatroom extends Component {
+  componentDidMount() {
+    this.client = SocketHandler.instance;
+  }
+  
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const that = this;
+    const { history } = this.props;
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        that.client.create(values.name, (chatroom) => {
+          history.push({ pathname: `/chatroom/${chatroom.id}`})
+        })
+      }
+    })
+  }
+
   render() {
     const { getFieldDecorator } = this.props.form;
     return (

@@ -1,34 +1,59 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import { ChatroomListWrapper, TableWrapper } from './ChatroomStyles';
-import { Button } from 'antd';
-import { Link } from 'react-router-dom';
-import { ButtonWrapper } from 'styles/global';
-import ConfirmButton from 'components/Buttons/ConfirmButton';
 import SideButton from 'components/Buttons/SideButton';
+import SocketHandler from 'utils/socket';
+import { connect } from 'react-redux';
 
-const chatroomColumns = [
-  {
-    accessor: 'chatroom'
-  }
-]
-const dummyData = [
-  {
-    chatroom: 'Hello, World!'
-  },
-  {
-    chatroom: 'Hello, World222!'
-  },
-]
+const chatroomColumns = (history) => {
+  return [{
+    accessor: 'chatroom',
+    Cell: (row) => {
+      const rowData = row.original;
+      return (
+        <div onClick={() => history.push({ pathname: `/chatroom/${rowData.id}`})}>{rowData.name}</div>
+      )
+    }
+  }]
+}
 
 class ChatroomList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      chatroomList: []
+    }
+  }
+
+  componentDidMount() {
+    const { username } = this.props;
+    this.client = SocketHandler.instance;
+
+    if (username) {
+      this.client.register(username, this.handleRegister);
+    }
+  }
+
+  handleRegister = () => {
+    this.client.getChatroomList(this.handleChatroomList);
+  }
+
+  handleChatroomList = (chatroomList) => {
+    console.log("got chatroomlist", chatroomList);
+    this.setState({ chatroomList })
+  }
+  
   render() {
+    const { chatroomList } = this.state;
+    const { history } = this.props;
+
     return (
       <ChatroomListWrapper>
         <TableWrapper>
           <ReactTable
-            columns={chatroomColumns}
-            data={dummyData}
+            columns={chatroomColumns(history)}
+            data={chatroomList}
             minRows={15}
             showPagination={false}
             sortable={false}
@@ -43,4 +68,10 @@ class ChatroomList extends Component {
   }
 }
 
-export default ChatroomList
+const mapStateToProps = (state) => {
+  return { 
+    username: state.userInfo.user
+  }
+}
+
+export default connect(mapStateToProps)(ChatroomList);

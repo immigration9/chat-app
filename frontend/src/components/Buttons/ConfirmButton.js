@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'antd';
 import { ButtonWrapper } from 'styles/global';
-const ConfirmButton = ({ onConfirm, text, styles = {} }) => {
+const ConfirmButton = ({ onConfirm, text, styles = {}, type = "primary" }) => {
   return (
     <Button 
       type="primary"

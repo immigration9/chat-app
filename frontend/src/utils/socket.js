@@ -29,16 +29,59 @@ class SocketHandler {
     }
   }
 
-  join = (chatroomId, callback) => { 
-    this.client.emit('register', chatroomId, callback); 
+  /**
+   * 방을 생성함
+   */
+  create = (chatroomName, callback) => {
+    /**
+     * Callback으로 Chatroom의 Name과 ID를 리턴 받아야함
+     */
+    this.client.emit('create', chatroomName, callback) ;
   }
 
-  leave = (chatroomId, callback) => { 
-    this.client.emit('leave', chatroomId, callback); 
+  register = (username, callback) => {
+    this.client.emit('register', username, callback);
   }
 
-  message = (chatroomId, message, callback) => { 
-    this.client.emit('message', chatroomId, message, callback)
+  /**
+   * 방에 접속함
+   */
+  join = (chatroomId, username, callback) => { 
+    this.client.emit('join', chatroomId, username, callback); 
+  }
+
+  /**
+   * 방에서 나감
+   */
+  leave = (chatroomId, username, callback) => { 
+    this.client.emit('leave', chatroomId, username, callback); 
+  }
+
+  /**
+   * 방에 초대됨
+   */
+  invite = (chatroomId, otherUserName, callback) => {
+    this.client.emit('invite', chatroomId, otherUserName, callback);
+  }
+
+  /**
+   * 메시지를 전송함
+   */
+  message = (chatroomId, username, message, callback) => { 
+    this.client.emit('message', chatroomId, username, message, callback)
+  }
+
+  listen = (callback) => {
+    console.log("llll", callback)
+    this.client.on('message', callback);
+  }
+
+  invitation = (callback) => {
+    this.client.on('invited', callback)
+  }
+
+  getChatroomList = (callback) => {
+    this.client.emit('chatroomList', callback);
   }
 
 }
