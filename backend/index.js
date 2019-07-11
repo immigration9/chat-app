@@ -3,6 +3,9 @@
  */
 require('dotenv').config();
 const config = require('config');
+const server = require('http').createServer();
+const io = require('socket.io')(server);
+const initServer = require('./src/sockets/initSocket');
 const express = require('express');
 const dbConnect = require('./src/database/connector');
 
@@ -26,6 +29,11 @@ async function initServer() {
   await dbConnect();
 
   /**
+   * Sockets go here
+   */
+  io.on('connection', initServer);
+
+  /**
    * Middlewares go here
    */
 
@@ -42,7 +50,7 @@ async function initServer() {
    * Initialize Server
    */
   const port = config.get('server.port') || 8080;
-  app.listen(port, () => console.log(`
+  server.listen(port, () => console.log(`
     Chat Application
     Application initiated.
     Listening on port ${port}.
